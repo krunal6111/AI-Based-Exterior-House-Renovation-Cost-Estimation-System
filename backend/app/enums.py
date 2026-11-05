@@ -19,6 +19,7 @@ class RegionCategory(str, Enum):
     PILLAR = "pillar"
     PARAPET = "parapet"
     RAILING = "railing"
+    ROOF = "roof"
     ROOF_EDGE = "roof_edge"
     GATE = "gate"
     PLINTH = "plinth"
@@ -51,6 +52,7 @@ _CATEGORY_LABELS: dict[RegionCategory, str] = {
     RegionCategory.PILLAR: "Pillar / column",
     RegionCategory.PARAPET: "Parapet wall",
     RegionCategory.RAILING: "Railing",
+    RegionCategory.ROOF: "Roof covering",
     RegionCategory.ROOF_EDGE: "Roof edge / coping",
     RegionCategory.GATE: "Gate area",
     RegionCategory.PLINTH: "Plinth / skirting band",

@@ -121,7 +121,7 @@ frontend/
     components/
       CanvasEditor.tsx  react-konva polygon editor
       CompareSlider.tsx before/after wipe
-    steps/           Upload · Surfaces · Measure · Design · Estimate · Report
+    steps/           Upload · Surfaces (incl. scale) · Design · Estimate · Report
 docs/
 storage/<project-id>/  original.jpg · display.jpg · render-*.jpg · report.pdf
 ```

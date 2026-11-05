@@ -11,12 +11,15 @@ import type {
   Region,
 } from "./types";
 
-export type StepId = "upload" | "surfaces" | "measure" | "design" | "estimate" | "report";
+export type StepId = "upload" | "surfaces" | "design" | "estimate" | "report";
 
 export const STEPS: { id: StepId; label: string; blurb: string }[] = [
   { id: "upload", label: "Photo", blurb: "Upload a picture of the exterior" },
-  { id: "surfaces", label: "Surfaces", blurb: "Check and correct the detected surfaces" },
-  { id: "measure", label: "Measure", blurb: "Set the scale so areas are real" },
+  {
+    id: "surfaces",
+    label: "Surfaces",
+    blurb: "Check the detected surfaces and set the scale",
+  },
   { id: "design", label: "Design", blurb: "Try materials on the house" },
   { id: "estimate", label: "Estimate", blurb: "Quantities, rates and total cost" },
   { id: "report", label: "Report", blurb: "Download a report for your contractor" },
@@ -31,6 +34,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   pillar: "#c08a1e",
   parapet: "#2a8f8f",
   railing: "#c2407f",
+  roof: "#8a4423",
   roof_edge: "#5a6b7d",
   gate: "#a93226",
   plinth: "#6d7f2f",
@@ -90,6 +94,11 @@ interface State {
   assignMaterial: (
     regionId: string,
     materialId: string | null,
+    params?: Record<string, unknown>,
+  ) => Promise<void>;
+  assignMaterialToMany: (
+    regionIds: string[],
+    materialId: string,
     params?: Record<string, unknown>,
   ) => Promise<void>;
 
@@ -319,6 +328,33 @@ export const useStore = create<State>((set, get) => {
       if (materialId) next.push({ region_id: regionId, material_id: materialId, params });
 
       const updated = await withBusy("Applying material", () =>
+        api.putAssignments(project.id, variant?.name ?? "Option A", next),
+      );
+      if (updated) {
+        adopt(updated);
+        set({ estimate: null });
+      }
+    },
+
+    async assignMaterialToMany(regionIds, materialId, params = {}) {
+      const { project } = get();
+      if (!project || regionIds.length === 0) return;
+      const variant = project.variants.find((v) => v.id === project.active_variant_id);
+      const current = variant?.assignments ?? [];
+      const targets = new Set(regionIds);
+
+      const next = current
+        .filter((a) => !targets.has(a.region_id))
+        .map((a) => ({
+          region_id: a.region_id,
+          material_id: a.material_id,
+          params: a.params ?? {},
+        }));
+      for (const regionId of regionIds) {
+        next.push({ region_id: regionId, material_id: materialId, params });
+      }
+
+      const updated = await withBusy(`Applying material to ${regionIds.length} surfaces`, () =>
         api.putAssignments(project.id, variant?.name ?? "Option A", next),
       );
       if (updated) {

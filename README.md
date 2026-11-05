@@ -51,11 +51,10 @@ the quality gate — useful for seeing that path work.)
 | Step | What happens | Requirement |
 |---|---|---|
 | **1. Photo** | Any format normalises to sRGB JPEG; a quality gate grades sharpness, exposure, resolution and framing, and gives advice rather than a bare rejection. | 5.1 |
-| **2. Surfaces** | Walls, openings, pillars and railings are detected automatically, then **you correct them** in a polygon editor. Openings nest into their wall so they are never painted or billed. | 5.2 |
-| **3. Measure** | Drag a handle onto something of known size — the front door by default. Every surface is rectified to remove perspective and reported in sq ft (or running ft) with the method and error band actually used. | 5.5 |
-| **4. Design** | Pick a material per surface from an editable catalog. The render re-surfaces your own photo using its own lighting; a wipe slider compares before and after. | 5.3, 5.4 |
-| **5. Estimate** | Quantities with coverage, wastage and pack sizes; costs with every rate editable and every formula shown. | 5.6, 5.7 |
-| **6. Report** | A PDF with both photos, measured surfaces, quantities, full costing, and a page stating what the estimate assumes. | 5.8 |
+| **2. Surfaces** | Walls, roofs, openings, pillars and railings are detected automatically, then **you correct them** in a polygon editor. Openings nest into their wall so they are never painted or billed. The same step has a "Set scale" toggle: drag a handle onto something of known size — the front door by default — and every surface is rectified to remove perspective and reported in sq ft (or running ft) with the method and error band actually used. There is no separate scale-setting page to click through; it folds into this one. | 5.2, 5.5 |
+| **3. Design** | Pick a material per surface from an editable catalog. The biggest surface is pre-selected so materials are visible the moment the step opens, and a material can be applied to every other matching surface in one click. The render re-surfaces your own photo using its own lighting; a wipe slider compares before and after. | 5.3, 5.4 |
+| **4. Estimate** | Quantities with coverage, wastage and pack sizes; costs with every rate editable and every formula shown. | 5.6, 5.7 |
+| **5. Report** | A PDF with both photos, measured surfaces, quantities, full costing, and a page stating what the estimate assumes. | 5.8 |
 
 ---
 

@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { STEPS, useStore, type StepId } from "./store";
 import { UploadStep } from "./steps/UploadStep";
 import { SurfacesStep } from "./steps/SurfacesStep";
-import { MeasureStep } from "./steps/MeasureStep";
 import { DesignStep } from "./steps/DesignStep";
 import { EstimateStep } from "./steps/EstimateStep";
 import { ReportStep } from "./steps/ReportStep";
 
 /** Steps that use the split canvas + panel layout. */
-const SPLIT_STEPS: StepId[] = ["surfaces", "measure", "design"];
+const SPLIT_STEPS: StepId[] = ["surfaces", "design"];
 
 export default function App() {
   const {
@@ -52,7 +51,7 @@ export default function App() {
 
   /** Flush unsaved outline edits whenever the user leaves an editing step. */
   const go = async (id: StepId) => {
-    if (regionsDirty && (step === "surfaces" || step === "measure")) {
+    if (regionsDirty && step === "surfaces") {
       await saveRegions();
     }
     setStep(id);
@@ -63,8 +62,6 @@ export default function App() {
     switch (step) {
       case "surfaces":
         return <SurfacesStep />;
-      case "measure":
-        return <MeasureStep />;
       case "design":
         return <DesignStep />;
       case "estimate":
@@ -169,11 +166,6 @@ export default function App() {
           <span className="spacer" />
 
           {step === "surfaces" && !confirmedScale && (
-            <span className="small muted">
-              Next: set the scale so these areas become real measurements.
-            </span>
-          )}
-          {step === "measure" && !confirmedScale && (
             <span className="badge warn">
               <span className="dot" /> Scale not confirmed
             </span>

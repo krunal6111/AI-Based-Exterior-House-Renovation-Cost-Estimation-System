@@ -148,7 +148,7 @@ You are helping measure a house for an exterior renovation quote.
 
 Identify the distinct exterior SURFACES of the building in this photograph:
 main walls, windows, doors, balconies, pillars/columns, parapet walls, railings,
-roof edges, gates, plinth bands and sunshades.
+the roof covering, roof edges, gates, plinth bands and sunshades.
 
 Rules:
 - Only outline parts of the building itself. Never outline sky, trees, lawn,
@@ -158,7 +158,11 @@ Rules:
 - Treat each flat plane as its own surface. A wall facing left and a wall facing
   front are two surfaces, not one.
 - Outline windows and doors separately from the wall they sit in.
-- Do not outline the roof covering itself; it is not being renovated.
+- If a sloped or pitched roof (shingles, tiles, metal sheeting) is visible,
+  outline it as its own surface with category "roof" -- it is one of the
+  largest surfaces on most houses and is frequently re-covered during a
+  renovation, so it must not be skipped. A flat concrete terrace deck is not
+  usually re-covered; skip that case only.
 - Prefer a few accurate surfaces over many sloppy ones.
 """
 

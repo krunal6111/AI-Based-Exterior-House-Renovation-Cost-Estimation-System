@@ -286,6 +286,26 @@ def _metal_brushed(w, h, base, cw, ch, gpx, gcol, relief, ppm, seed):  # noqa: A
     return _finish(colour, _relief_shade(inset * 0.8, relief))
 
 
+def _shingle(w, h, base, cw, ch, gpx, gcol, relief, ppm, seed):  # noqa: ANN001
+    # Strips run the full course width; only the row boundary reads as a
+    # reveal, not a grid, since shingle tabs within a course overlap rather
+    # than butt-join the way a tile or panel does.
+    unit, fx, fy = _unit_grid(h, w, cw, ch, stagger=True)
+    row = np.floor(unit / 7919.0)
+    tone = _hash01(row, 2.9)[:, :, None]
+    colour = base[None, None, :] * (0.78 + 0.34 * tone)
+
+    grit = fbm(h, w, octaves=5, base=64, seed=seed + 9)
+    colour *= (0.90 + 0.18 * grit)[:, :, None]
+
+    dist_y = np.minimum(fy * ch, (1.0 - fy) * ch)
+    reveal = np.clip((gpx * 2.2 - dist_y) / max(gpx * 2.2, 1e-3), 0.0, 1.0)[:, :, None]
+    colour = colour * (1.0 - 0.6 * reveal) + gcol[None, None, :] * (0.6 * reveal)
+
+    height_map = grit * 0.4 + (1.0 - dist_y / max(ch, 1.0)) * 0.6
+    return _finish(colour, _relief_shade(height_map, relief * 1.2))
+
+
 _BUILDERS = {
     "plaster": _plaster,
     "stone_ashlar": _stone_ashlar,
@@ -294,6 +314,7 @@ _BUILDERS = {
     "tile": _tile,
     "wood": _wood,
     "metal_brushed": _metal_brushed,
+    "shingle": _shingle,
 }
 
 AVAILABLE_TEXTURES = tuple(_BUILDERS)

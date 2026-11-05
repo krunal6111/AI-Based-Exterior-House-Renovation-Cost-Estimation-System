@@ -254,6 +254,89 @@
       "source_note": "INDICATIVE ONLY - no 2026 source found in research. Edit before relying on it."
     },
     {
+      "id": "roof_tile_clay",
+      "name": "Clay/concrete roof tile (Mangalore pattern)",
+      "short": "Interlocking country tile, laid on battens",
+      "kind": "tile",
+      "group": "Roof",
+      "applies_to": ["roof"],
+      "render": {
+        "kind": "texture",
+        "texture": "tile",
+        "base_color": "#A6572E",
+        "scale_mm": 260,
+        "course_mm": [260, 150],
+        "grout": { "color": "#7A3F20", "width_mm": 3 },
+        "relief": 0.28
+      },
+      "palette": ["#A6572E", "#8A4423", "#5C5853", "#B9A893"],
+      "piece_size_mm": [405, 255],
+      "pieces_per_box": 1,
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 12,
+      "rate": {
+        "material": { "unit": "sqft", "min": 40, "default": 75, "max": 150 },
+        "labour": { "unit": "sqft", "min": 25, "default": 38, "max": 50 }
+      },
+      "durability_years": [25, 50],
+      "maintenance": "Check for cracked/slipped tiles after monsoon; re-bed ridge tiles occasionally.",
+      "source_note": "Clay/Mangalore tile ₹40-100/sqft, concrete tile ₹60-120/sqft (Bricknbolt, HouseYog 2025 guides); installation ₹25-50/sqft in metro cities. No audited 2026 figure found - treat as a starting point."
+    },
+    {
+      "id": "roof_metal_sheet",
+      "name": "Colour-coated metal roofing sheet (PPGI/GI)",
+      "short": "Corrugated or standing-seam sheet, laid over purlins",
+      "kind": "panel",
+      "group": "Roof",
+      "applies_to": ["roof"],
+      "render": {
+        "kind": "texture",
+        "texture": "metal_brushed",
+        "base_color": "#7A3B32",
+        "scale_mm": 1050,
+        "course_mm": [1050, 1800],
+        "grout": { "color": "#4A4F54", "width_mm": 6 },
+        "relief": 0.1
+      },
+      "palette": ["#7A3B32", "#3E444A", "#8E9499", "#2F6B4F", "#B8BEC4"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 8,
+      "rate": {
+        "material": { "unit": "sqft", "min": 45, "default": 70, "max": 140 },
+        "labour": { "unit": "sqft", "min": 15, "default": 25, "max": 40 }
+      },
+      "durability_years": [15, 30],
+      "maintenance": "Check fasteners and ridge flashing yearly; repaint colour coat if it chalks.",
+      "source_note": "PPGI/GI colour-coated sheet ₹45-125/sqft material depending on brand and gauge (Apex Metals, Tata-linked guides, 2026); no reliable India installed-labour figure found, so labour here is a rough placeholder - edit it before relying on it."
+    },
+    {
+      "id": "roof_shingle_asphalt",
+      "name": "Asphalt shingles",
+      "short": "Overlapping bitumen-fibreglass strip shingles",
+      "kind": "panel",
+      "group": "Roof",
+      "applies_to": ["roof"],
+      "render": {
+        "kind": "texture",
+        "texture": "shingle",
+        "base_color": "#4A4038",
+        "scale_mm": 1000,
+        "course_mm": [1000, 140],
+        "grout": { "color": "#2E2A26", "width_mm": 2 },
+        "relief": 0.22
+      },
+      "palette": ["#4A4038", "#6B5A4A", "#8A5A2B", "#3A3F44", "#7A7468"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 10,
+      "rate": {
+        "material": { "unit": "sqft", "min": 60, "default": 100, "max": 180 },
+        "labour": { "unit": "sqft", "min": 25, "default": 40, "max": 65 }
+      },
+      "durability_years": [15, 25],
+      "maintenance": "Check for curling/missing tabs after storms; moss growth in damp climates.",
+      "source_note": "INDICATIVE ONLY - asphalt shingles are uncommon in Indian supply chains (mainly imported for hill-station cottages); no dated 2026 Indian source found. Rate is a placeholder based on general shingle pricing - edit it before relying on it."
+    },
+    {
       "id": "railing_ms",
       "name": "MS (mild steel) railing",
       "kind": "railing",

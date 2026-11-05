@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CanvasEditor } from "../components/CanvasEditor";
 import { CompareSlider } from "../components/CompareSlider";
 import { categoryColor, useMoney, useStore } from "../store";
-import type { Material } from "../types";
+import type { Material, Region } from "../types";
 
 function swatchStyle(material: Material, colour?: string) {
   const render = (material.render ?? {}) as Record<string, string>;
@@ -30,6 +30,7 @@ export function DesignStep() {
     selectedRegionId,
     selectRegion,
     assignMaterial,
+    assignMaterialToMany,
     renderDesign,
     busy,
   } = useStore();
@@ -42,6 +43,20 @@ export function DesignStep() {
     [variant],
   );
 
+  const measured = useMemo(() => regions.filter((r) => r.measurement), [regions]);
+
+  // A surface must already be selected for its materials to show at all, and
+  // nothing was ever pre-selected, so the single biggest surface on the house
+  // (almost always the main wall or roof) picks itself the moment this step
+  // opens -- materials are visible immediately instead of after a hunt.
+  useEffect(() => {
+    if (selectedRegionId || measured.length === 0) return;
+    const biggest = [...measured].sort(
+      (a, b) => (b.measurement?.area_sqft ?? 0) - (a.measurement?.area_sqft ?? 0),
+    )[0];
+    selectRegion(biggest.id);
+  }, [selectedRegionId, measured, selectRegion]);
+
   const selected = regions.find((r) => r.id === selectedRegionId) ?? null;
   const current = selected ? assignments.get(selected.id) : undefined;
   const currentMaterial = catalog?.materials.find((m) => m.id === current?.material_id);
@@ -52,6 +67,17 @@ export function DesignStep() {
       (m) => m.assignable && m.applies_to.includes(selected.category),
     );
   }, [catalog, selected]);
+
+  // Other surfaces this same material could also go on -- a house photographed
+  // from one angle is often one exterior finish, so applying stone to the main
+  // wall and then clicking through every pillar and gable separately is pure
+  // busywork. Only offered for a material actually assigned to `selected`.
+  const sameMaterialCandidates = (material: Material): Region[] =>
+    measured.filter((r) => {
+      if (r.id === selected?.id) return false;
+      if (!material.applies_to.includes(r.category)) return false;
+      return assignments.get(r.id)?.material_id !== material.id;
+    });
 
   const renderUrl = variant?.render_url ?? null;
   const assignedCount = assignments.size;
@@ -120,7 +146,7 @@ export function DesignStep() {
         <div className="canvas-hint">
           {showCompare && renderUrl
             ? "Drag the divider to compare. The building's geometry is never altered — only the surface finish."
-            : "Click a surface, then pick a material for it on the right."}
+            : "The biggest surface is picked for you — click a different one to switch, or pick its material on the right."}
         </div>
       </div>
 
@@ -128,9 +154,10 @@ export function DesignStep() {
         <div className="pane-head">
           <h2>Try materials</h2>
           <p>
-            Pick a surface, then a material. The preview uses your photo's own
-            lighting and perspective, so what you see is your house — not a
-            showroom render of someone else's.
+            A surface is already selected below so you can pick a material
+            straight away. The preview uses your photo's own lighting and
+            perspective, so what you see is your house — not a showroom render
+            of someone else's.
           </p>
         </div>
 
@@ -140,59 +167,15 @@ export function DesignStep() {
               <span className="icon">i</span>
               <div>
                 <strong>Nothing applied yet.</strong>
-                Select a surface below and choose a material to get started.
+                Pick a material below for {selected?.name ?? "the selected surface"}
+                , or click a different surface in the list further down.
               </div>
             </div>
           )}
 
-          <div className="section-title">Surfaces</div>
-          {regions
-            .filter((r) => r.measurement)
-            .map((region) => {
-              const assigned = assignments.get(region.id);
-              const material = catalog?.materials.find((m) => m.id === assigned?.material_id);
-              return (
-                <div
-                  key={region.id}
-                  className={`region-row ${region.id === selectedRegionId ? "selected" : ""}`}
-                  onClick={() => selectRegion(region.id)}
-                >
-                  <span
-                    className="swatch"
-                    style={
-                      material
-                        ? swatchStyle(material, assigned?.params?.color as string)
-                        : { background: categoryColor(region.category) }
-                    }
-                  />
-                  <div className="meta">
-                    <div className="name">{region.name}</div>
-                    <div className="sub">
-                      {material ? material.name : "No material yet"}
-                      {region.measurement!.area_sqft > 0 &&
-                        ` · ${region.measurement!.area_sqft.toFixed(0)} sq ft`}
-                      {region.measurement!.length_ft > 0 &&
-                        ` · ${region.measurement!.length_ft.toFixed(1)} rft`}
-                    </div>
-                  </div>
-                  {material && (
-                    <button
-                      className="btn sm ghost"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        void assignMaterial(region.id, null);
-                      }}
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-
-          {selected && (
+          {selected ? (
             <>
-              <div className="section-title">Materials for {selected.category_label}</div>
+              <div className="section-title">Materials for {selected.name}</div>
               {options.length === 0 && (
                 <p className="small muted">
                   No catalog material applies to this surface type. Change its type on
@@ -289,10 +272,76 @@ export function DesignStep() {
                   {currentMaterial.source_note && (
                     <p className="tiny muted">{currentMaterial.source_note}</p>
                   )}
+
+                  {(() => {
+                    const others = sameMaterialCandidates(currentMaterial);
+                    if (others.length === 0) return null;
+                    return (
+                      <button
+                        className="btn block mt"
+                        disabled={!!busy}
+                        onClick={() =>
+                          void assignMaterialToMany(
+                            others.map((r) => r.id),
+                            currentMaterial.id,
+                            current?.params ?? {},
+                          )
+                        }
+                      >
+                        Apply {currentMaterial.name} to {others.length} other matching
+                        surface{others.length === 1 ? "" : "s"} too
+                      </button>
+                    );
+                  })()}
                 </div>
               )}
             </>
+          ) : (
+            <p className="small muted">Click a surface in the photo, or in the list below.</p>
           )}
+
+          <div className="section-title mt">Surfaces</div>
+          {measured.map((region) => {
+            const assigned = assignments.get(region.id);
+            const material = catalog?.materials.find((m) => m.id === assigned?.material_id);
+            return (
+              <div
+                key={region.id}
+                className={`region-row ${region.id === selectedRegionId ? "selected" : ""}`}
+                onClick={() => selectRegion(region.id)}
+              >
+                <span
+                  className="swatch"
+                  style={
+                    material
+                      ? swatchStyle(material, assigned?.params?.color as string)
+                      : { background: categoryColor(region.category) }
+                  }
+                />
+                <div className="meta">
+                  <div className="name">{region.name}</div>
+                  <div className="sub">
+                    {material ? material.name : "No material yet"}
+                    {region.measurement!.area_sqft > 0 &&
+                      ` · ${region.measurement!.area_sqft.toFixed(0)} sq ft`}
+                    {region.measurement!.length_ft > 0 &&
+                      ` · ${region.measurement!.length_ft.toFixed(1)} rft`}
+                  </div>
+                </div>
+                {material && (
+                  <button
+                    className="btn sm ghost"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      void assignMaterial(region.id, null);
+                    }}
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            );
+          })}
 
           <button
             className="btn primary block mt"
