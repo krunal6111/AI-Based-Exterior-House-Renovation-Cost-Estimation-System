@@ -1105,6 +1105,16 @@ tr.total td:hover {
   padding: 10px 12px;
 }
 
+.sample-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.sample-tile .thumb {
+  height: 76px;
+}
+.sample-tile .body {
+  padding: 8px 10px;
+}
+
 @media (max-width: 1080px) {
   .workspace {
     grid-template-columns: minmax(0, 1fr);

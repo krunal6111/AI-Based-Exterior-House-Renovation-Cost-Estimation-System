@@ -180,7 +180,22 @@ export const useStore = create<State>((set, get) => {
       );
       if (!project) return;
       adopt(project);
-      set({ step: project.quality?.usable ? "surfaces" : "upload", estimate: null });
+
+      const quality = project.quality;
+      if (quality && !quality.usable) {
+        // A quality failure is business-as-usual, not a thrown error, but it
+        // needs the same unmissable treatment: a card buried below the fold
+        // of the upload page is exactly the kind of thing a first-time user
+        // never scrolls down to see.
+        const errors = quality.issues.filter((i) => i.severity === "error");
+        const message = errors.length
+          ? errors.map((i) => `${i.message} ${i.guidance}`.trim()).join(" ")
+          : "That photo could not be used. Try a clearer, larger photo.";
+        set({ step: "upload", estimate: null, error: message });
+      } else {
+        set({ step: "surfaces", estimate: null });
+      }
+
       const projects = await api.listProjects().catch(() => get().projects);
       set({ projects });
     },

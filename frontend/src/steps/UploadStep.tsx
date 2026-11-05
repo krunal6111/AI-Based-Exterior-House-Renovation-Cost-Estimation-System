@@ -1,47 +1,33 @@
 import { useRef, useState } from "react";
 import { useStore } from "../store";
-import type { Quality } from "../types";
 
-const SEVERITY_CLASS: Record<string, string> = {
-  error: "bad",
-  warning: "warn",
-  info: "good",
-};
-
-export function QualityReport({ quality }: { quality: Quality }) {
-  return (
-    <div className="card mt">
-      <div className="row" style={{ justifyContent: "space-between" }}>
-        <h3>Photo check</h3>
-        <span
-          className={`badge ${quality.usable ? (quality.score > 80 ? "" : "warn") : "bad"}`}
-        >
-          <span className="dot" />
-          {quality.usable ? `Usable · ${quality.score.toFixed(0)}/100` : "Not usable"}
-        </span>
-      </div>
-      <p className="hint">
-        {quality.width}×{quality.height} px · the building fills about{" "}
-        {(quality.building_fraction * 100).toFixed(0)}% of the frame
-      </p>
-
-      {quality.issues.map((issue, index) => (
-        <div key={index} className={`notice ${SEVERITY_CLASS[issue.severity] ?? "info"}`}>
-          <span className="icon">
-            {issue.severity === "error" ? "✕" : issue.severity === "warning" ? "!" : "✓"}
-          </span>
-          <div>
-            <strong>{issue.message}</strong>
-            {issue.guidance && <span>{issue.guidance}</span>}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+/** Example photos for anyone trying the tool without a photo of their own handy. */
+const SAMPLE_PHOTOS: { id: string; label: string; src: string; file: string; mime: string }[] = [
+  {
+    id: "sample-1",
+    label: "Modern stone exterior",
+    src: "/samples/sample-1-modern-stone.webp",
+    file: "sample-1-modern-stone.webp",
+    mime: "image/webp",
+  },
+  {
+    id: "sample-2",
+    label: "Brick bungalow",
+    src: "/samples/sample-2-brick-bungalow.webp",
+    file: "sample-2-brick-bungalow.webp",
+    mime: "image/webp",
+  },
+  {
+    id: "sample-3",
+    label: "Gray cottage",
+    src: "/samples/sample-3-gray-cottage.avif",
+    file: "sample-3-gray-cottage.avif",
+    mime: "image/avif",
+  },
+];
 
 export function UploadStep() {
-  const { createProject, projects, openProject, deleteProject, busy, project } = useStore();
+  const { createProject, projects, openProject, deleteProject, busy } = useStore();
   const [dragging, setDragging] = useState(false);
   const [name, setName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -50,6 +36,13 @@ export function UploadStep() {
     if (!file) return;
     const fallback = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
     void createProject(file, name.trim() || fallback || "Untitled renovation");
+  };
+
+  const useSample = async (sample: (typeof SAMPLE_PHOTOS)[number]) => {
+    const response = await fetch(sample.src);
+    const blob = await response.blob();
+    const file = new File([blob], sample.file, { type: sample.mime });
+    void createProject(file, name.trim() || sample.label);
   };
 
   return (
@@ -102,9 +95,24 @@ export function UploadStep() {
           />
         </div>
 
-        {project?.quality && !project.quality.usable && (
-          <QualityReport quality={project.quality} />
-        )}
+        <div className="section-title" style={{ marginTop: 22 }}>
+          Don't have a photo handy? Try one of these
+        </div>
+        <div className="project-grid sample-grid">
+          {SAMPLE_PHOTOS.map((sample) => (
+            <button
+              key={sample.id}
+              className="project-tile sample-tile"
+              onClick={() => void useSample(sample)}
+              disabled={!!busy}
+            >
+              <img className="thumb" src={sample.src} alt={sample.label} loading="lazy" />
+              <div className="body">
+                <div style={{ fontWeight: 650, fontSize: 13 }}>{sample.label}</div>
+              </div>
+            </button>
+          ))}
+        </div>
 
         {projects.length > 0 && (
           <>

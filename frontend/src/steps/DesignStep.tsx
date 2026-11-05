@@ -4,6 +4,10 @@ import { CompareSlider } from "../components/CompareSlider";
 import { categoryColor, useMoney, useStore } from "../store";
 import type { Material, Region } from "../types";
 
+/** Shown first in the material grid, in this order -- the options a homeowner
+ * reaches for most on an exterior, ahead of paint and the more niche panels. */
+const FEATURED_MATERIAL_IDS = ["cladding_sandstone", "cladding_slate", "tile_elevation", "panel_wood_wpc"];
+
 function swatchStyle(material: Material, colour?: string) {
   const render = (material.render ?? {}) as Record<string, string>;
   const base = colour || render.base_color || "#cccccc";
@@ -63,9 +67,17 @@ export function DesignStep() {
 
   const options = useMemo(() => {
     if (!catalog || !selected) return [];
-    return catalog.materials.filter(
+    const applicable = catalog.materials.filter(
       (m) => m.assignable && m.applies_to.includes(selected.category),
     );
+    return [...applicable].sort((a, b) => {
+      const ia = FEATURED_MATERIAL_IDS.indexOf(a.id);
+      const ib = FEATURED_MATERIAL_IDS.indexOf(b.id);
+      if (ia === -1 && ib === -1) return 0;
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
   }, [catalog, selected]);
 
   // Other surfaces this same material could also go on -- a house photographed
@@ -120,7 +132,7 @@ export function DesignStep() {
           <div className="toolbar-group">
             <button
               className="tool active"
-              onClick={() => void renderDesign()}
+              onClick={() => void renderDesign().then(() => setShowCompare(true))}
               disabled={!!busy || assignedCount === 0}
             >
               ✨ Render the house
@@ -345,7 +357,7 @@ export function DesignStep() {
 
           <button
             className="btn primary block mt"
-            onClick={() => void renderDesign()}
+            onClick={() => void renderDesign().then(() => setShowCompare(true))}
             disabled={!!busy || assignedCount === 0}
           >
             {renderUrl ? "Re-render with these materials" : "Render the house"}

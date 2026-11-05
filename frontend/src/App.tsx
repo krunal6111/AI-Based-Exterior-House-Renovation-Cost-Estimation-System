@@ -40,7 +40,6 @@ export default function App() {
   const index = STEPS.findIndex((s) => s.id === step);
   const hasProject = !!project;
   const hasRegions = regions.length > 0;
-  const confirmedScale = !!project?.calibration?.confirmed;
 
   const canVisit = (id: StepId) => {
     if (id === "upload") return true;
@@ -165,11 +164,6 @@ export default function App() {
 
           <span className="spacer" />
 
-          {step === "surfaces" && !confirmedScale && (
-            <span className="badge warn">
-              <span className="dot" /> Scale not confirmed
-            </span>
-          )}
           {regionsDirty && <span className="badge warn">Unsaved outline changes</span>}
 
           <button

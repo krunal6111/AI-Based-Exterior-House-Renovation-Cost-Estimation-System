@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from pathlib import Path
 from typing import Any
 
@@ -85,8 +86,15 @@ def _building_box(asset: ImageAsset | None) -> tuple[int, int, int, int] | None:
     return tuple(box) if box and len(box) == 4 else None
 
 
-def _file_url(project_id: str, filename: str) -> str:
-    return f"{settings.api_prefix}/projects/{project_id}/files/{filename}"
+def _file_url(project_id: str, filename: str, version: float | str | None = None) -> str:
+    url = f"{settings.api_prefix}/projects/{project_id}/files/{filename}"
+    # A render reuses the same filename every time (it's keyed on the variant,
+    # not the render event), so without a cache-busting query the browser --
+    # and a React effect keyed on this same URL string -- has no way to tell
+    # a fresh render apart from the one already showing.
+    if version is not None:
+        url += f"?v={version}"
+    return url
 
 
 def _serialise(db: Session, project: Project) -> ProjectOut:
@@ -146,8 +154,11 @@ def _serialise(db: Session, project: Project) -> ProjectOut:
         if v.render_asset_id:
             for a in project.images:
                 if a.id == v.render_asset_id:
+                    meta = a.meta or {}
                     render_url = _file_url(
-                        project.id, (a.meta or {}).get("view") or a.filename
+                        project.id,
+                        meta.get("view") or a.filename,
+                        version=meta.get("rendered_at"),
                     )
                     break
         variants_out.append(
@@ -723,17 +734,19 @@ def post_render(
         )
         db.add(existing)
         db.flush()
+    rendered_at = time.time()
     existing.width, existing.height = width, height
     existing.meta = {
         "engine": result.engine,
         "layers": result.layers_applied,
         "view": view_name,
+        "rendered_at": rendered_at,
     }
     variant.render_asset_id = existing.id
 
     db.commit()
     return RenderOut(
-        render_url=_file_url(project.id, view_name),
+        render_url=_file_url(project.id, view_name, version=rendered_at),
         engine=result.engine,
         layers_applied=result.layers_applied,
         warnings=result.warnings,

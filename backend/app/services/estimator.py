@@ -104,16 +104,12 @@ def resolve_scale(
             if not cal.confirmed:
                 scale.method = AreaMethod.PIXEL_RATIO
                 scale.confidence = 0.35
-                warnings.append(
-                    "The reference object was placed automatically and has not "
-                    "been confirmed. Check it on the Measure step - it is the "
-                    "single biggest lever on the accuracy of every area here."
-                )
             return scale, warnings
 
     warnings.append(
         "No reference object set. Areas use an assumed building height and "
-        "should be treated as rough. Set a reference on the Measure step."
+        "should be treated as rough. Set a reference using \"Set scale\" on "
+        "the Surfaces step."
     )
     return (
         fallback_scale(building_box, image_width, image_height),
