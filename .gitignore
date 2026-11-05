@@ -1,0 +1,28 @@
+# Python
+backend/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local data: uploads, renders and reports are per-machine
+storage/
+backend/renovation.db
+backend/renovation.db-wal
+backend/renovation.db-shm
+backend/.env
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Extra md files
+AI-Based Exterior House Renovation & Cost Estimation System.md
+
+# Example test images
+/house_images/

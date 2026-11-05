@@ -1,0 +1,383 @@
+{
+  "currency": "INR",
+  "currency_symbol": "₹",
+  "updated": "2026-11-05",
+  "disclaimer": "Indicative Indian market rates compiled from public contractor and supplier listings (2026). Rates for the same item vary 3-5x by city, brand, grade and scope, so every figure here is a starting point that you are expected to edit to your own quotations. Nothing in this catalog is a quotation.",
+  "materials": [
+    {
+      "id": "paint_economy",
+      "name": "Economy exterior emulsion",
+      "short": "Ace-grade exterior paint",
+      "kind": "paint",
+      "group": "Paint",
+      "applies_to": ["wall", "parapet", "pillar", "balcony", "plinth", "sunshade", "gate", "other"],
+      "render": { "kind": "solid", "base_color": "#EFE7D8", "sheen": 0.10 },
+      "palette": ["#EFE7D8", "#F2EDE3", "#E6DCC6", "#D9CFBA", "#C9D6D3", "#D6DCE4", "#E8D9CE", "#CFD8C7"],
+      "coverage": { "sqft_per_litre_per_coat": 95, "default_coats": 2 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "litre", "min": 210, "default": 285, "max": 400 },
+        "labour": { "unit": "sqft", "min": 6, "default": 9, "max": 14 }
+      },
+      "pack_sizes_litre": [20, 10, 4, 1],
+      "requires": ["primer_exterior"],
+      "durability_years": [3, 5],
+      "maintenance": "Repaint every 3-5 years. Fades faster on south/west walls.",
+      "source_note": "Exterior economy painting quoted at ₹14-22/sqft all-in (AapkaPainter, Hyderabad 2026); labour alone ₹6-11/sqft."
+    },
+    {
+      "id": "paint_premium",
+      "name": "Premium exterior emulsion",
+      "short": "Apex-grade, 7-year warranty class",
+      "kind": "paint",
+      "group": "Paint",
+      "applies_to": ["wall", "parapet", "pillar", "balcony", "plinth", "sunshade", "gate", "other"],
+      "render": { "kind": "solid", "base_color": "#E8E2D4", "sheen": 0.18 },
+      "palette": ["#E8E2D4", "#FFFFFF", "#F5F0E6", "#D8CFBE", "#BFC9C2", "#A8B5C4", "#C8A98A", "#8E9A8B", "#D6A77A", "#6E7B8B"],
+      "coverage": { "sqft_per_litre_per_coat": 120, "default_coats": 2 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "litre", "min": 450, "default": 620, "max": 860 },
+        "labour": { "unit": "sqft", "min": 8, "default": 12, "max": 20 }
+      },
+      "pack_sizes_litre": [20, 10, 4, 1],
+      "requires": ["primer_exterior", "putty_exterior"],
+      "durability_years": [5, 8],
+      "maintenance": "Wash annually; repaint every 5-8 years. Good algae/fungal resistance.",
+      "source_note": "Apex Ultima coverage ~110-130 sqft/litre/coat (product data). 20L pack ₹5,800-12,710 depending on listing; premium exterior jobs quoted ₹25-70/sqft all-in."
+    },
+    {
+      "id": "paint_ultra",
+      "name": "Ultra-premium exterior emulsion",
+      "short": "Protek-grade, dirt + heat resistant",
+      "kind": "paint",
+      "group": "Paint",
+      "applies_to": ["wall", "parapet", "pillar", "balcony", "plinth", "sunshade", "other"],
+      "render": { "kind": "solid", "base_color": "#F2EEE6", "sheen": 0.24 },
+      "palette": ["#F2EEE6", "#FFFFFF", "#E3DACB", "#C3CBD1", "#9FB1A6", "#B08968", "#7D8A99", "#4F5D6B"],
+      "coverage": { "sqft_per_litre_per_coat": 110, "default_coats": 2 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "litre", "min": 620, "default": 790, "max": 1100 },
+        "labour": { "unit": "sqft", "min": 10, "default": 15, "max": 24 }
+      },
+      "pack_sizes_litre": [20, 10, 4, 1],
+      "requires": ["primer_exterior", "putty_exterior"],
+      "durability_years": [8, 12],
+      "maintenance": "Lowest maintenance paint option; self-cleaning on rain-washed faces.",
+      "source_note": "Apex Ultima Protek quoted ₹25-38/sqft in Hyderabad 2026 listings; premium guides range ₹30-70/sqft."
+    },
+    {
+      "id": "texture_paint",
+      "name": "Exterior texture finish",
+      "short": "Trowel/roller applied texture coat",
+      "kind": "texture",
+      "group": "Texture",
+      "applies_to": ["wall", "parapet", "pillar", "balcony", "plinth", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "plaster",
+        "base_color": "#D9CFC0",
+        "scale_mm": 420,
+        "relief": 0.35
+      },
+      "palette": ["#D9CFC0", "#C4B8A6", "#E2DAD0", "#B5A58F", "#9E9484", "#CFC3B2"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 8,
+      "rate": {
+        "material": { "unit": "sqft", "min": 55, "default": 95, "max": 180 },
+        "labour": { "unit": "sqft", "min": 25, "default": 55, "max": 120 }
+      },
+      "requires": ["primer_exterior"],
+      "durability_years": [7, 12],
+      "maintenance": "Traps dust in deep profiles; pressure-wash every 2-3 years.",
+      "source_note": "Texture paint ₹80-250/sqft across 2026 guides; ₹120-300/sqft including plaster base; one Bangalore guide quotes ₹40-120/sqft."
+    },
+    {
+      "id": "cladding_sandstone",
+      "name": "Natural sandstone cladding",
+      "kind": "cladding",
+      "group": "Stone cladding",
+      "applies_to": ["wall", "pillar", "plinth", "parapet", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "stone_ashlar",
+        "base_color": "#C8A77E",
+        "scale_mm": 600,
+        "course_mm": [600, 200],
+        "grout": { "color": "#8C7558", "width_mm": 6 },
+        "relief": 0.55
+      },
+      "palette": ["#C8A77E", "#B08D64", "#D8C3A0", "#9C8465"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 10,
+      "rate": {
+        "material": { "unit": "sqft", "min": 80, "default": 240, "max": 850 },
+        "labour": { "unit": "sqft", "min": 40, "default": 60, "max": 110 }
+      },
+      "durability_years": [20, 40],
+      "maintenance": "Seal every 3-5 years to resist water staining; repoint joints as needed.",
+      "source_note": "Sandstone ₹80-850/sqft and installation ₹40-80/sqft (Earthstona 2026); installed natural stone veneer ₹600-1500/sqft in front-elevation guides."
+    },
+    {
+      "id": "cladding_slate",
+      "name": "Slate / ledger stone cladding",
+      "kind": "cladding",
+      "group": "Stone cladding",
+      "applies_to": ["wall", "pillar", "plinth", "parapet", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "stone_ledger",
+        "base_color": "#5F6672",
+        "scale_mm": 600,
+        "course_mm": [600, 90],
+        "grout": { "color": "#3C4149", "width_mm": 3 },
+        "relief": 0.7
+      },
+      "palette": ["#5F6672", "#4A5058", "#746B5E", "#3B4149"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 12,
+      "rate": {
+        "material": { "unit": "sqft", "min": 60, "default": 165, "max": 250 },
+        "labour": { "unit": "sqft", "min": 45, "default": 70, "max": 120 }
+      },
+      "durability_years": [20, 40],
+      "maintenance": "Very low maintenance; occasional wash. Deep relief collects dust.",
+      "source_note": "Slate ₹60-250/sqft (Earthstona 2026); installation ₹40-80/sqft basic."
+    },
+    {
+      "id": "cladding_marble",
+      "name": "Marble cladding",
+      "kind": "cladding",
+      "group": "Stone cladding",
+      "applies_to": ["wall", "pillar", "plinth", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "marble",
+        "base_color": "#EDEAE4",
+        "scale_mm": 900,
+        "course_mm": [900, 600],
+        "grout": { "color": "#D5D0C8", "width_mm": 2 },
+        "relief": 0.15
+      },
+      "palette": ["#EDEAE4", "#DFD8CC", "#C9CCC9", "#E8E0D2"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 12,
+      "rate": {
+        "material": { "unit": "sqft", "min": 450, "default": 720, "max": 1100 },
+        "labour": { "unit": "sqft", "min": 60, "default": 95, "max": 160 }
+      },
+      "durability_years": [25, 50],
+      "maintenance": "Polish periodically; vulnerable to acid rain staining on exteriors.",
+      "source_note": "Marble cladding ₹450-1100/sqft (Earthstona 2026)."
+    },
+    {
+      "id": "tile_elevation",
+      "name": "Elevation / facade tile",
+      "short": "Vitrified 600x300 mm",
+      "kind": "tile",
+      "group": "Tile",
+      "applies_to": ["wall", "pillar", "plinth", "parapet", "balcony", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "tile",
+        "base_color": "#B9A893",
+        "scale_mm": 600,
+        "course_mm": [600, 300],
+        "grout": { "color": "#9A8F80", "width_mm": 3 },
+        "relief": 0.2
+      },
+      "palette": ["#B9A893", "#8C8278", "#C6BDAE", "#6F7B73", "#A46B4E"],
+      "piece_size_mm": [600, 300],
+      "pieces_per_box": 5,
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 10,
+      "rate": {
+        "material": { "unit": "sqft", "min": 25, "default": 65, "max": 180 },
+        "labour": { "unit": "sqft", "min": 25, "default": 40, "max": 60 }
+      },
+      "requires": ["tile_adhesive"],
+      "durability_years": [15, 25],
+      "maintenance": "Low. Check joints for water ingress every few years.",
+      "source_note": "Elevation tiles ₹62-80/sqft (IndiaMART Pune listings); ceramic from ₹25 to premium vitrified ₹180/sqft; budget ₹60-90/sqft all-in (Orient Bell). Tiling labour ₹25-60/sqft."
+    },
+    {
+      "id": "panel_wood_wpc",
+      "name": "Wood-look WPC/HPL panel",
+      "kind": "panel",
+      "group": "Panel",
+      "applies_to": ["wall", "balcony", "parapet", "pillar", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "wood",
+        "base_color": "#9A6B3F",
+        "scale_mm": 1200,
+        "course_mm": [1800, 150],
+        "grout": { "color": "#5E412A", "width_mm": 4 },
+        "relief": 0.3
+      },
+      "palette": ["#9A6B3F", "#7A5431", "#B58757", "#5C4228"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 10,
+      "rate": {
+        "material": { "unit": "sqft", "min": 150, "default": 250, "max": 450 },
+        "labour": { "unit": "sqft", "min": 50, "default": 80, "max": 140 }
+      },
+      "durability_years": [10, 15],
+      "maintenance": "Colour may fade in direct sun; needs a framing substructure.",
+      "source_note": "INDICATIVE ONLY - not verified against a 2026 price list. Edit before relying on it."
+    },
+    {
+      "id": "panel_acp",
+      "name": "ACP composite panel",
+      "kind": "panel",
+      "group": "Panel",
+      "applies_to": ["wall", "balcony", "parapet", "pillar", "gate", "other"],
+      "render": {
+        "kind": "texture",
+        "texture": "metal_brushed",
+        "base_color": "#8E9499",
+        "scale_mm": 1220,
+        "course_mm": [1220, 900],
+        "grout": { "color": "#4A4F54", "width_mm": 8 },
+        "relief": 0.12
+      },
+      "palette": ["#8E9499", "#C0C5C9", "#3E444A", "#9B7B4F"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 12,
+      "rate": {
+        "material": { "unit": "sqft", "min": 130, "default": 220, "max": 400 },
+        "labour": { "unit": "sqft", "min": 45, "default": 75, "max": 130 }
+      },
+      "durability_years": [10, 20],
+      "maintenance": "Wipe down annually. Check sealant at joints.",
+      "source_note": "INDICATIVE ONLY - no 2026 source found in research. Edit before relying on it."
+    },
+    {
+      "id": "railing_ms",
+      "name": "MS (mild steel) railing",
+      "kind": "railing",
+      "group": "Railing",
+      "applies_to": ["railing", "balcony", "roof_edge", "parapet", "gate"],
+      "render": {
+        "kind": "railing",
+        "style": "bar",
+        "base_color": "#3A3F44",
+        "post_spacing_mm": 1200,
+        "height_mm": 1050
+      },
+      "palette": ["#3A3F44", "#1C1F22", "#6B6F73", "#8A5A2B"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "rft", "min": 300, "default": 450, "max": 800 },
+        "labour": { "unit": "rft", "min": 80, "default": 140, "max": 250 }
+      },
+      "durability_years": [8, 15],
+      "maintenance": "Repaint every 2-3 years; rust-prone in coastal air.",
+      "source_note": "MS railing per-foot rates are thin in public listings; forum quotes ₹500-1500 but mixed per-sqft/per-rft. Treat as indicative."
+    },
+    {
+      "id": "railing_ss",
+      "name": "Stainless steel railing (SS 304)",
+      "kind": "railing",
+      "group": "Railing",
+      "applies_to": ["railing", "balcony", "roof_edge", "parapet", "gate"],
+      "render": {
+        "kind": "railing",
+        "style": "post_rail",
+        "base_color": "#B8BEC4",
+        "post_spacing_mm": 1200,
+        "height_mm": 1050
+      },
+      "palette": ["#B8BEC4", "#9AA1A8", "#D5DADE"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "rft", "min": 500, "default": 700, "max": 1250 },
+        "labour": { "unit": "rft", "min": 100, "default": 160, "max": 300 }
+      },
+      "durability_years": [20, 30],
+      "maintenance": "Wipe with mild cleaner; SS 304 holds up far better than 202 outdoors.",
+      "source_note": "SS railing ₹600-1600/ft (forum, avg ~₹1250); Mumbai suppliers from ~₹690/running ft. Nickel-driven volatility in 2026."
+    },
+    {
+      "id": "railing_glass",
+      "name": "Frameless glass railing",
+      "kind": "railing",
+      "group": "Railing",
+      "applies_to": ["railing", "balcony", "roof_edge", "parapet"],
+      "render": {
+        "kind": "railing",
+        "style": "glass",
+        "base_color": "#AFC6D1",
+        "opacity": 0.35,
+        "post_spacing_mm": 1500,
+        "height_mm": 1100
+      },
+      "palette": ["#AFC6D1", "#C9D6DC", "#8FA8B5"],
+      "coverage": { "sqft_per_unit": 1.0 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "rft", "min": 900, "default": 1600, "max": 2850 },
+        "labour": { "unit": "rft", "min": 150, "default": 350, "max": 600 }
+      },
+      "durability_years": [15, 25],
+      "maintenance": "Highest cleaning need - shows every water spot. Check spigot torque yearly.",
+      "source_note": "Balcony frameless glass ₹1850-2850/rft supply+install (vendor calculators); other calculators quote ₹650-2500/rft."
+    },
+
+    {
+      "id": "primer_exterior",
+      "name": "Exterior primer",
+      "kind": "consumable",
+      "group": "Preparation",
+      "applies_to": [],
+      "render": null,
+      "coverage": { "sqft_per_litre_per_coat": 140, "default_coats": 1 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "litre", "min": 230, "default": 320, "max": 480 },
+        "labour": { "unit": "sqft", "min": 2, "default": 4, "max": 7 }
+      },
+      "pack_sizes_litre": [20, 10, 4, 1],
+      "durability_years": [0, 0],
+      "maintenance": "",
+      "source_note": "Derived automatically from painted/textured area. Rates indicative."
+    },
+    {
+      "id": "putty_exterior",
+      "name": "Exterior wall putty",
+      "kind": "consumable",
+      "group": "Preparation",
+      "applies_to": [],
+      "render": null,
+      "coverage": { "sqft_per_kg": 15, "default_coats": 2 },
+      "wastage_pct": 8,
+      "rate": {
+        "material": { "unit": "kg", "min": 26, "default": 38, "max": 60 },
+        "labour": { "unit": "sqft", "min": 4, "default": 8, "max": 14 }
+      },
+      "durability_years": [0, 0],
+      "maintenance": "",
+      "source_note": "Derived automatically from premium/ultra painted area. Rates indicative."
+    },
+    {
+      "id": "tile_adhesive",
+      "name": "Tile adhesive (exterior grade)",
+      "kind": "consumable",
+      "group": "Preparation",
+      "applies_to": [],
+      "render": null,
+      "coverage": { "sqft_per_bag": 35 },
+      "wastage_pct": 5,
+      "rate": {
+        "material": { "unit": "bag", "min": 420, "default": 620, "max": 950 },
+        "labour": { "unit": "sqft", "min": 0, "default": 0, "max": 0 }
+      },
+      "durability_years": [0, 0],
+      "maintenance": "",
+      "source_note": "20 kg bag covering ~35 sqft at 6 mm bed. Labour counted within the tiling rate."
+    }
+  ]
+}

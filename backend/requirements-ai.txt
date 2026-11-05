@@ -1,0 +1,10 @@
+# Optional AI providers. The system runs fully without these.
+#
+#   pip install -r requirements-ai.txt
+#
+# Then set GEMINI_API_KEY in backend/.env and switch on the features you want:
+#   ENABLE_AI_SEGMENTATION=true   # uses gemini-3.8-flash (has a free tier)
+#   ENABLE_AI_RENDER=true         # uses gemini-nano-banana-2.1 (paid, ~$0.034/image)
+#
+# >=2.30.1 is the first release with the Interactions API this project uses.
+google-genai>=2.30.1

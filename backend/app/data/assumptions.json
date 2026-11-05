@@ -1,0 +1,72 @@
+{
+  "updated": "2026-11-05",
+  "note": "Every number here is a documented, editable assumption. They are the reason the system can estimate real-world size from a single photograph with no measuring equipment (requirement 8).",
+
+  "reference_objects": [
+    {
+      "id": "door",
+      "label": "Main door height",
+      "real_ft": 6.9,
+      "tolerance_ft": 0.4,
+      "note": "Standard Indian residential door leaf is 2100 mm (6 ft 11 in) including frame. The most reliable reference in a facade photo."
+    },
+    {
+      "id": "floor_height",
+      "label": "Floor-to-floor height",
+      "real_ft": 10.0,
+      "tolerance_ft": 1.0,
+      "note": "Typical low-rise residential floor-to-floor is 3.0-3.2 m. Use when a door is not visible."
+    },
+    {
+      "id": "window",
+      "label": "Window height",
+      "real_ft": 4.0,
+      "tolerance_ft": 0.8,
+      "note": "Common 1200 mm window. Weakest of the three - window sizes vary a lot."
+    },
+    {
+      "id": "custom",
+      "label": "Something I measured myself",
+      "real_ft": 10.0,
+      "tolerance_ft": 0.1,
+      "note": "Best accuracy. Measure any visible edge with a tape and enter it."
+    }
+  ],
+
+  "quality_gate": {
+    "min_edge_px": 480,
+    "warn_edge_px": 640,
+    "blur_laplacian_var_min": 80.0,
+    "blur_warn_var": 150.0,
+    "luma_min": 40.0,
+    "luma_max": 215.0,
+    "clipped_fraction_max": 0.25,
+    "min_building_fraction": 0.20
+  },
+
+  "measurement": {
+    "default_method": "reference_object",
+    "railing_default_height_ft": 3.5,
+    "roof_edge_default_depth_ft": 0.75,
+    "note": "Linear items are measured along their polyline in running feet. Railing height is only used to sanity-check the drawn polyline, not to bill area."
+  },
+
+  "cost_settings": {
+    "scaffolding_rate_per_sqft": 8.0,
+    "scaffolding_enabled": true,
+    "transport_lumpsum": 3500.0,
+    "contractor_overhead_pct": 10.0,
+    "gst_pct": 18.0,
+    "gst_enabled": true,
+    "contingency_pct": 5.0,
+    "note": "Scaffolding is charged on total painted/clad area. Overhead and GST are applied in that order on the running subtotal."
+  },
+
+  "limitations": [
+    "Areas are derived from a single photograph. Faces of the building not visible in the photo are not measured and are not in the estimate.",
+    "Perspective rectification assumes each wall is planar and roughly rectangular. Curved or heavily ornamented facades will be over- or under-estimated.",
+    "The automatic region detection is a starting suggestion, not a survey. Reviewing and correcting it is a required step, not an optional one.",
+    "Material rates are regional and volatile. The seeded catalog is a midpoint of public 2026 listings and is meant to be overwritten with your own quotations.",
+    "Cost output is advisory and is not a quotation or a legally binding estimate."
+  ]
+}
