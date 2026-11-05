@@ -102,7 +102,47 @@ Two credential paths, either is enough:
 | Path | Set in `.env` | Notes |
 |---|---|---|
 | AI Studio | `GEMINI_API_KEY` | Simplest. Get one at aistudio.google.com/apikey. |
-| Vertex AI | `VERTEX_PROJECT` + the `GOOGLE_APPLICATION_CREDENTIALS` **environment variable** (service-account JSON, not committed) | Use if you're already on GCP. |
+| Vertex AI | `VERTEX_PROJECT` + `GOOGLE_APPLICATION_CREDENTIALS` (absolute path to a service-account JSON key, not committed -- see below) | Use if you're already on GCP. |
+
+#### Getting a Vertex AI service-account key
+
+Skip this if you're using AI Studio instead (the simpler path, above).
+
+1. In [Google Cloud Console](https://console.cloud.google.com/), pick or create
+   a project, and confirm **billing is linked** to it -- Vertex AI calls fail
+   without it, and the failure doesn't say so plainly.
+2. Enable the **Vertex AI API** for that project (APIs & Services → Enable
+   APIs → "Vertex AI API").
+3. Create a service account with the **Vertex AI User** role: IAM & Admin →
+   Service Accounts → Create → grant that role → Keys tab → Add key → JSON.
+   This downloads a `.json` key file.
+   Equivalently, with the `gcloud` CLI:
+   ```bash
+   gcloud iam service-accounts create vertex-renovation --display-name "Vertex AI (renovation app)"
+   gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+     --member="serviceAccount:vertex-renovation@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/aiplatform.user"
+   gcloud iam service-accounts keys create backend/vertex-key.json \
+     --iam-account="vertex-renovation@YOUR_PROJECT_ID.iam.gserviceaccount.com"
+   ```
+4. Place the downloaded file at **`backend/vertex-key.json`**. That exact path
+   is already covered by `.gitignore` (`backend/vertex-key.json`, plus
+   `service-account*.json` and `*.json.key` as a general guard) -- putting it
+   there means you can't accidentally commit it. Any other path works too, as
+   long as it isn't inside something git tracks.
+5. In `backend/.env`, set:
+   ```
+   VERTEX_PROJECT=your-gcp-project-id
+   GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/backend/vertex-key.json
+   ```
+   This has to be an **absolute path** -- a relative one resolves against
+   whatever directory the process happens to be started from, which changes
+   depending on how you launch it and breaks the moment it doesn't. On
+   Windows that looks like `C:\full\path\to\backend\vertex-key.json`; on
+   macOS/Linux, `/full/path/to/backend/vertex-key.json`.
+6. Restart the backend after editing `.env` -- settings are read once at
+   startup and cached, so an edit alone doesn't take effect on a running
+   server.
 
 Two gotchas that cost real debugging time while wiring this up, both now
 handled by the code but worth knowing:

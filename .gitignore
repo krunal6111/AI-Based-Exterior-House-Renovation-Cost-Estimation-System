@@ -11,6 +11,11 @@ backend/renovation.db-wal
 backend/renovation.db-shm
 backend/.env
 
+# Service-account credentials - never commit these
+backend/vertex-key.json
+*.json.key
+service-account*.json
+
 # Node
 frontend/node_modules/
 frontend/dist/
