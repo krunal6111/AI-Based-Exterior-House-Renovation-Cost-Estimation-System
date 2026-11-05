@@ -7,6 +7,11 @@ transparent cost breakdown you can hand to a contractor.
 **It runs completely offline.** No API keys, no network, no per-image cost.
 Optional Gemini providers can be switched on later if you want them.
 
+![Before and after: the same photograph, repainted white, with the compare slider mid-drag](docs/screenshot-before-after.png)
+
+The renderer re-surfaces the actual uploaded photo — same geometry, same
+windows, same shadows — it never generates a new image from scratch.
+
 ---
 
 ## Quick start
@@ -52,7 +57,7 @@ the quality gate — useful for seeing that path work.)
 |---|---|---|
 | **1. Photo** | Any format normalises to sRGB JPEG; a quality gate grades sharpness, exposure, resolution and framing, and gives advice rather than a bare rejection. | 5.1 |
 | **2. Surfaces** | Walls, roofs, openings, pillars and railings are detected automatically, then **you correct them** in a polygon editor. Openings nest into their wall so they are never painted or billed. The same step has a "Set scale" toggle: drag a handle onto something of known size — the front door by default — and every surface is rectified to remove perspective and reported in sq ft (or running ft) with the method and error band actually used. There is no separate scale-setting page to click through; it folds into this one. | 5.2, 5.5 |
-| **3. Design** | Pick a material per surface from an editable catalog. The biggest surface is pre-selected so materials are visible the moment the step opens, and a material can be applied to every other matching surface in one click. The render re-surfaces your own photo using its own lighting; a wipe slider compares before and after. | 5.3, 5.4 |
+| **3. Material Design** | Pick a material per surface from an editable catalog. The biggest surface is pre-selected so materials are visible the moment the step opens, and a material can be applied to every other matching surface in one click. The render re-surfaces your own photo using its own lighting; a wipe slider compares before and after. | 5.3, 5.4 |
 | **4. Estimate** | Quantities with coverage, wastage and pack sizes; costs with every rate editable and every formula shown. | 5.6, 5.7 |
 | **5. Report** | A PDF with both photos, measured surfaces, quantities, full costing, and a page stating what the estimate assumes. | 5.8 |
 

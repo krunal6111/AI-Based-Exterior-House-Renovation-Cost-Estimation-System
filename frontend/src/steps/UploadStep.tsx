@@ -55,16 +55,6 @@ export function UploadStep() {
           breakdown — all computed on your own machine.
         </p>
 
-        <label className="field">
-          <span>Project name</span>
-          <input
-            type="text"
-            value={name}
-            placeholder="e.g. Front elevation refresh"
-            onChange={(event) => setName(event.target.value)}
-          />
-        </label>
-
         <div
           className={`dropzone ${dragging ? "drag" : ""}`}
           onClick={() => inputRef.current?.click()}
@@ -113,6 +103,16 @@ export function UploadStep() {
             </button>
           ))}
         </div>
+
+        <label className="field" style={{ marginTop: 22 }}>
+          <span>Project name (optional)</span>
+          <input
+            type="text"
+            value={name}
+            placeholder="e.g. Front elevation refresh"
+            onChange={(event) => setName(event.target.value)}
+          />
+        </label>
 
         {projects.length > 0 && (
           <>

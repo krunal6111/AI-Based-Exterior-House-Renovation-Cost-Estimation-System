@@ -20,7 +20,7 @@ export const STEPS: { id: StepId; label: string; blurb: string }[] = [
     label: "Surfaces",
     blurb: "Check the detected surfaces and set the scale",
   },
-  { id: "design", label: "Design", blurb: "Try materials on the house" },
+  { id: "design", label: "Material Design", blurb: "Try materials on the house" },
   { id: "estimate", label: "Estimate", blurb: "Quantities, rates and total cost" },
   { id: "report", label: "Report", blurb: "Download a report for your contractor" },
 ];

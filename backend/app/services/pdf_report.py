@@ -209,18 +209,22 @@ def build_report(
     )
 
     # ---------------- headline numbers --------------------------------
-    headline = _table(
-        [
-            ["Estimated project cost", "Likely range", "Surface measured", "Linear work"],
-            [
-                money(estimate.grand_total),
-                f"{money(estimate.range_low)} - {money(estimate.range_high)}",
-                f"{estimate.total_area_sqft:,.0f} sq ft",
-                f"{estimate.total_length_ft:,.0f} rft",
-            ],
-        ],
-        [content_w * 0.28, content_w * 0.32, content_w * 0.22, content_w * 0.18],
-    )
+    # "Linear work" (railings, roof edges) only earns its column when a
+    # project actually has some -- most are wall/roof jobs with none, and a
+    # column that reads 0 rft on every report is noise, not information.
+    headline_cols = ["Estimated project cost", "Likely range", "Surface measured"]
+    headline_row = [
+        money(estimate.grand_total),
+        f"{money(estimate.range_low)} - {money(estimate.range_high)}",
+        f"{estimate.total_area_sqft:,.0f} sq ft",
+    ]
+    headline_widths = [content_w * 0.28, content_w * 0.32, content_w * 0.40]
+    if estimate.total_length_ft > 0:
+        headline_cols.append("Linear work")
+        headline_row.append(f"{estimate.total_length_ft:,.0f} rft")
+        headline_widths = [content_w * 0.28, content_w * 0.32, content_w * 0.22, content_w * 0.18]
+
+    headline = _table([headline_cols, headline_row], headline_widths)
     headline.setStyle(
         TableStyle(
             [

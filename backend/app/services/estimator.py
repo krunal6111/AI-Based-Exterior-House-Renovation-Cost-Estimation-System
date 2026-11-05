@@ -247,8 +247,8 @@ def build_estimate(
 
     if not rows:
         warnings.append(
-            "No materials assigned yet - pick materials on the Design step to "
-            "see a cost."
+            "No materials assigned yet - pick materials on the Material Design "
+            "step to see a cost."
         )
     return quantities, estimate, warnings
 

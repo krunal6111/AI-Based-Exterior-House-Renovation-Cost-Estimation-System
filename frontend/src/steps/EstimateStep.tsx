@@ -69,7 +69,7 @@ export function EstimateStep() {
             <span className="icon">i</span>
             <div>
               <strong>Nothing to cost yet.</strong>
-              Go back to the Design step and apply a material to at least one surface.
+              Go back to the Material Design step and apply a material to at least one surface.
             </div>
           </div>
         )}
@@ -90,10 +90,12 @@ export function EstimateStep() {
                 <div className="label">Surface</div>
                 <div className="value">{estimate.total_area_sqft.toFixed(0)} sq ft</div>
               </div>
-              <div className="stat">
-                <div className="label">Linear work</div>
-                <div className="value">{estimate.total_length_ft.toFixed(0)} rft</div>
-              </div>
+              {estimate.total_length_ft > 0 && (
+                <div className="stat">
+                  <div className="label">Linear work</div>
+                  <div className="value">{estimate.total_length_ft.toFixed(0)} rft</div>
+                </div>
+              )}
               <div className="stat">
                 <div className="label">Materials</div>
                 <div className="value">{money(estimate.material_subtotal)}</div>
