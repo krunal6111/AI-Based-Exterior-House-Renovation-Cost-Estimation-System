@@ -158,7 +158,9 @@ export function DesignStep() {
         <div className="canvas-hint">
           {showCompare && renderUrl
             ? "Drag the divider to compare. The building's geometry is never altered — only the surface finish."
-            : "The biggest surface is picked for you — click a different one to switch, or pick its material on the right."}
+            : assignedCount > 0
+              ? <>Click <strong>✨ Render the house</strong> above to see this material on your photo.</>
+              : "Click a surface, then pick a material for it on the right."}
         </div>
       </div>
 
