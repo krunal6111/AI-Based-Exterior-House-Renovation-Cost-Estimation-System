@@ -10,6 +10,8 @@ backend/renovation.db
 backend/renovation.db-wal
 backend/renovation.db-shm
 backend/.env
+frontend/.env
+frontend/.env.local
 
 # Service-account credentials - never commit these
 backend/vertex-key.json
@@ -19,6 +21,7 @@ service-account*.json
 # Node
 frontend/node_modules/
 frontend/dist/
+*.tsbuildinfo
 
 # Editors / OS
 .vscode/

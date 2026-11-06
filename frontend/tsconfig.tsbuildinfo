@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/api.ts","./src/main.tsx","./src/store.ts","./src/types.ts","./src/components/canvaseditor.tsx","./src/components/compareslider.tsx","./src/steps/designstep.tsx","./src/steps/estimatestep.tsx","./src/steps/measurestep.tsx","./src/steps/reportstep.tsx","./src/steps/surfacesstep.tsx","./src/steps/uploadstep.tsx"],"version":"5.9.3"}

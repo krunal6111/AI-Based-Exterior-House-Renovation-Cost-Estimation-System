@@ -10,7 +10,12 @@ import type {
   Region,
 } from "./types";
 
-const BASE = "/api";
+// Empty for local dev: Vite's proxy forwards same-origin "/api" to the
+// backend (see vite.config.ts). In production (frontend and backend on
+// different origins, e.g. Vercel + a standalone API host) this is set at
+// build time to the backend's own origin, e.g. "https://api.example.com".
+const API_ORIGIN = import.meta.env.VITE_API_BASE ?? "";
+const BASE = `${API_ORIGIN}/api`;
 const TOKEN_KEY = "reno.owner-token";
 
 /** Stable per-browser identity. This is what keeps concurrent users apart. */
@@ -172,9 +177,14 @@ export const api = {
     URL.revokeObjectURL(url);
   },
 
-  /** Images are behind the owner-token check too. */
+  /**
+   * Images are behind the owner-token check too. `url` is whatever the API
+   * put in image_url/render_url/thumbnail_url -- already rooted at
+   * settings.api_prefix (e.g. "/api/projects/.../files/display.jpg"), so it
+   * only needs the backend's origin prepended, not the full BASE.
+   */
   authedImage: async (url: string) => {
-    const response = await fetch(url, {
+    const response = await fetch(`${API_ORIGIN}${url}`, {
       headers: { "X-Owner-Token": ownerToken() },
     });
     if (!response.ok) throw new ApiError("Image not available", response.status);

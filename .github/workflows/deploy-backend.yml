@@ -1,0 +1,23 @@
+name: Deploy backend to GCP VM
+
+# The frontend redeploys itself via Vercel's own GitHub integration, so this
+# only needs to run for changes that actually affect the backend.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "deploy/**"
+  workflow_dispatch: {}
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH in and redeploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.RENO_SSH_HOST }}
+          username: ${{ secrets.RENO_SSH_USER }}
+          key: ${{ secrets.RENO_SSH_PRIVATE_KEY }}
+          script: sudo /opt/reno/app/deploy/redeploy.sh
