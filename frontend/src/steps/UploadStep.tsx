@@ -19,10 +19,10 @@ const SAMPLE_PHOTOS: { id: string; label: string; src: string; file: string; mim
   },
   {
     id: "sample-3",
-    label: "Gray cottage",
-    src: "/samples/sample-3-gray-cottage.avif",
-    file: "sample-3-gray-cottage.avif",
-    mime: "image/avif",
+    label: "House exterior",
+    src: "/samples/sample-3-house-exterior.jpg",
+    file: "sample-3-house-exterior.jpg",
+    mime: "image/jpeg",
   },
 ];
 
